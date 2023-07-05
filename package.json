@@ -11,9 +11,9 @@
   "dependencies": {
     "@types/node": "^18.0.6",
     "discord.js": "^14.11.0",
+    "git": "^0.1.5",
     "init": "^0.1.2",
     "node-fetch": "^3.2.6"
   },
-  "devDependencies": {},
   "description": ""
 }
