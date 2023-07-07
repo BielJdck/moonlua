@@ -24,28 +24,18 @@ for (const folder of commandFolders) {
   }
 }
 
-client.once(Events.ClientReady, c => {
-  console.log(`Conectado em ${c.user.tag}`);
-});
+const eventsPath = path.join(__dirname, 'events');
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
 
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-  const command = interaction.client.commands.get(interaction.commandName);
 
-  if (!command) {
-    console.error(`Nenhum comando corresponde a ${interaction.commandName} foi encontrado.`)
-    return;
-  }
-  try {
-    await command.execute(interaction);
-  } catch (error) {
-    console.error(error);
-    if (interaction.replied || interaction.deferred) {
-      await interaction.folowUp({ content: 'Ocorreu um erro ao executar este comando!', ephemeral: true });
+for (const file of eventFiles) {
+    const filePath = path.join(eventsPath, file);
+    const event = require(filePath);
+    if (event.once) {
+        client.once(event.name, (...args) => event.execute(...args));
     } else {
-      await interaction.replay({ content: 'Ocorreu um erro ao executar este comando!', ephemeral: true });
+        client.on(event.name, (...args) => event.execute(...args));
     }
-  }
-});
+}
 
 client.login(token);
