@@ -9,7 +9,9 @@
   "author": "BielLofy",
   "license": "ISC",
   "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
     "@types/node": "^18.0.6",
+    "canvas": "^2.11.2",
     "discord.js": "^14.11.0",
     "git": "^0.1.5",
     "init": "^0.1.2",
